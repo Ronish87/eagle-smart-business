@@ -1,78 +1,62 @@
+import 'package:eagle_smart_business/models/client_model.dart';
+import 'package:eagle_smart_business/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
-import '../services/database_service.dart';
 
 class ClientRepository {
-  // Insert Client
-  Future<int> insertClient({
-    required String companyName,
-    required String ownerName,
-    required String adminName,
-    required String mobile,
-    required String whatsapp,
-    required String email,
-    required String businessType,
-    required bool webAccess,
-    required bool mobileAccess,
-  }) async {
+  Future<int> insertClient(ClientModel client) async {
     final Database db = await DatabaseService.database;
 
-    return await db.insert('clients', {
-      'company_name': companyName,
-      'owner_name': ownerName,
-      'admin_name': adminName,
-      'mobile': mobile,
-      'whatsapp': whatsapp,
-      'email': email,
-      'business_type': businessType,
-      'web_access': webAccess ? 1 : 0,
-      'mobile_access': mobileAccess ? 1 : 0,
-    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    return await db.insert(
+      'clients',
+      client.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
-  // Get All Clients
-  Future<List<Map<String, dynamic>>> getClients() async {
+  Future<List<ClientModel>> getAllClients() async {
     final Database db = await DatabaseService.database;
 
-    return await db.query('clients', orderBy: 'id DESC');
+    final List<Map<String, dynamic>> maps = await db.query(
+      'clients',
+      orderBy: 'id DESC',
+    );
+
+    return List.generate(
+      maps.length,
+      (index) => ClientModel.fromMap(maps[index]),
+    );
   }
 
-  // Update Client
-  Future<int> updateClient({
-    required int id,
-    required String companyName,
-    required String ownerName,
-    required String adminName,
-    required String mobile,
-    required String whatsapp,
-    required String email,
-    required String businessType,
-    required bool webAccess,
-    required bool mobileAccess,
-  }) async {
+  Future<int> updateClient(ClientModel client) async {
     final Database db = await DatabaseService.database;
 
     return await db.update(
       'clients',
-      {
-        'company_name': companyName,
-        'owner_name': ownerName,
-        'admin_name': adminName,
-        'mobile': mobile,
-        'whatsapp': whatsapp,
-        'email': email,
-        'business_type': businessType,
-        'web_access': webAccess ? 1 : 0,
-        'mobile_access': mobileAccess ? 1 : 0,
-      },
+      client.toMap(),
       where: 'id = ?',
-      whereArgs: [id],
+      whereArgs: [client.id],
     );
   }
 
-  // Delete Client
   Future<int> deleteClient(int id) async {
     final Database db = await DatabaseService.database;
 
     return await db.delete('clients', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<List<ClientModel>> searchClients(String keyword) async {
+    final Database db = await DatabaseService.database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'clients',
+      where: 'company_name LIKE ? OR owner_name LIKE ?',
+      whereArgs: ['%$keyword%', '%$keyword%'],
+      orderBy: 'id DESC',
+    );
+
+    return List.generate(
+      maps.length,
+      (index) => ClientModel.fromMap(maps[index]),
+    );
   }
 }

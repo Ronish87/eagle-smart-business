@@ -1,4 +1,3 @@
-```dart
 import 'package:flutter/material.dart';
 
 import '../../models/stock_transaction_model.dart';
@@ -1022,4 +1021,3 @@ class _StockTransactionScreenState
     );
   }
 }
-```

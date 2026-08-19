@@ -1,4 +1,3 @@
-```dart
 import 'package:sqflite/sqflite.dart';
 
 import '../models/supplier_model.dart';
@@ -389,4 +388,3 @@ class SupplierRepository {
     );
   }
 }
-```

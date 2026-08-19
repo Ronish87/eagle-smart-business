@@ -1,4 +1,3 @@
-```dart
 import 'package:flutter/material.dart';
 
 import '../models/product_model.dart';
@@ -668,4 +667,3 @@ class _StockInScreenState
     );
   }
 }
-```

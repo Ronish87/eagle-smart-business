@@ -1,4 +1,3 @@
-```dart
 import 'package:flutter/material.dart';
 
 import '../../models/product_model.dart';
@@ -710,4 +709,3 @@ class _StockOutScreenState extends State<StockOutScreen> {
     );
   }
 }
-```

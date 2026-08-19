@@ -1,4 +1,3 @@
-```dart
 import 'package:flutter/material.dart';
 
 import '../../models/supplier_model.dart';
@@ -1082,4 +1081,3 @@ class _SupplierFormDialogState
     );
   }
 }
-```

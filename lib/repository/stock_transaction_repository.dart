@@ -1,4 +1,3 @@
-```dart
 import 'package:sqflite/sqflite.dart';
 
 import '../models/stock_transaction_model.dart';
@@ -10,7 +9,7 @@ class StockTransactionRepository {
   // ============================================================
 
   Future<Database> get _db async {
-    return await DatabaseService.database;
+    return await DatabaseService.instance.database;
   }
 
   // ============================================================
@@ -563,4 +562,3 @@ class StockTransactionRepository {
         .toList();
   }
 }
-```

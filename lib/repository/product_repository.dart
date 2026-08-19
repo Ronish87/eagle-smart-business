@@ -6,7 +6,7 @@ class ProductRepository {
   // DATABASE
   // ============================================================
 
-  Future get _db async => await DatabaseService.database;
+  Future get _db async => await DatabaseService.instance.database;
 
   // ============================================================
   // INSERT PRODUCT

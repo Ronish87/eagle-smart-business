@@ -1,4 +1,3 @@
-```dart
 class SupplierModel {
   final int? id;
 
@@ -270,4 +269,3 @@ class SupplierModel {
         ')';
   }
 }
-```

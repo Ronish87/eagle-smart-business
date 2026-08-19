@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 class ClientRepository {
   Future<int> insertClient(ClientModel client) async {
-    final Database db = await DatabaseService.database;
+    final Database db = await DatabaseService.instance.database;
 
     return await db.insert(
       'clients',
@@ -14,7 +14,7 @@ class ClientRepository {
   }
 
   Future<List<ClientModel>> getAllClients() async {
-    final Database db = await DatabaseService.database;
+    final Database db = await DatabaseService.instance.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
       'clients',
@@ -28,7 +28,7 @@ class ClientRepository {
   }
 
   Future<int> updateClient(ClientModel client) async {
-    final Database db = await DatabaseService.database;
+    final Database db = await DatabaseService.instance.database;
 
     return await db.update(
       'clients',
@@ -39,13 +39,13 @@ class ClientRepository {
   }
 
   Future<int> deleteClient(int id) async {
-    final Database db = await DatabaseService.database;
+    final Database db = await DatabaseService.instance.database;
 
     return await db.delete('clients', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List<ClientModel>> searchClients(String keyword) async {
-    final Database db = await DatabaseService.database;
+    final Database db = await DatabaseService.instance.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
       'clients',
